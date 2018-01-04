@@ -1,0 +1,65 @@
+<script type="text/x-template" id="employee-row">
+  <tr>
+    <td>
+      <div v-if="editMode">
+        <input type="text" v-model="employee.name"><br>
+        <span style="color:red">{{ errors.name }}</span>
+      </div>
+      <div v-else>{{ employee.name }}</div>
+    </td>
+    <td>
+      <div v-if="editMode">
+        <input type="text" v-model="employee.email"><br>
+        <span style="color:red">{{ errors.email }}</span>
+      </div>
+      <div v-else>{{ employee.email }}</div>
+    </td>
+    <td>
+      <div v-if="editMode">
+        <input type="checkbox" v-model="employee.manager">
+      </div>
+      <div v-else>{{ employee.manager ? '&#10004;' : '' }}</div>
+    </td>
+    <td>
+      <button v-if="editMode" @click="updateEmployee">Save</button>
+      <button v-else @click="editMode = true">Edit</button>
+      <button v-if="!editMode" @click="toggleManagerStatus">{{ employee.manager ? 'Demote' : 'Promote' }}</button>
+      <button v-if="!editMode" @click="fireEmployee" style="color:red">Fire</button>
+    </td>
+  </tr>
+</script>
+
+<h1>Employees</h1>
+
+<div id="employees">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Manager</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        is="employee-row"
+        v-for="employee in employees"
+        :employee="employee">
+      </tr>
+      <tr>
+        <td>
+          <input type="text" v-model="employee.name"><br>
+          <span style="color:red">{{ errors.name }}</span>
+        </td>
+        <td>
+          <input type="text" v-model="employee.email"><br>
+          <span style="color:red">{{ errors.email }}</span>
+        </td>
+        <td><input type="checkbox" v-model="employee.manager"></td>
+        <td><button @click="hireEmployee">Hire</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
